@@ -39,7 +39,7 @@ const (
 )
 
 var (
-	listenAddressF = kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9216").String()
+	listenAddressF = kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9113").String()
 	metricsPathF   = kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").Default("/metrics").String()
 
 	collectDatabaseF             = kingpin.Flag("collect.database", "Enable collection of Database metrics").Bool()
