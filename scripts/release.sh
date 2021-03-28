@@ -7,11 +7,9 @@ set -e
 
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
+name="mongodb-prometheus-exporter"
 tag=$(git describe --abbrev=0 --tags)
-
-name="$1"
-tag="$2"
-image="$DOCKER_USERNAME/mongodb-prometheus-exporter"
+image="$DOCKER_USERNAME/$name"
 platform="linux/amd64,linux/arm64,linux/arm"
 
 echo "🏗    Building '$image'"
