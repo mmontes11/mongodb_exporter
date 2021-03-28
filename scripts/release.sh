@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
 set -e
+#!/bin/bash
+
+set -e
 
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
 tag=$(git describe --abbrev=0 --tags)
-project="mongodb-prometheus-exporter"
-image="mmontes11/$project:$tag"
+
+name="$1"
+tag="$2"
+image="$DOCKER_USERNAME/mongodb-prometheus-exporter"
 platform="linux/amd64,linux/arm64,linux/arm"
 
-echo "👷   Creating builder $project ..."
-docker buildx create --name "$project"
-docker buildx use "$project"
-
-echo "🏗    Building $image ..."
-docker buildx build --platform "$platform" -t "$image" --push .
-docker buildx imagetools inspect "$image"
+echo "🏗    Building '$image'"
+docker buildx create --name "$name" --use --append
+docker buildx build --platform "$platform" -t "$image:$tag" -t "$image:latest" --push .
+docker buildx imagetools inspect "$image:latest"

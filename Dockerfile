@@ -1,4 +1,4 @@
-FROM golang:1.13.11
+FROM golang:1.13.11 AS builder
 
 LABEL maintainer="Martín Montes <martin11lrx@gmail.com>"
 
@@ -9,6 +9,8 @@ COPY . ${WORKDIR}
 
 RUN make build
 
-EXPOSE 9113
+FROM alpine:3.12.0
 
-ENTRYPOINT [ "bin/mongodb_exporter" ]
+COPY --from=builder /go/src/github.com/percona/mongodb_exporter/bin/mongodb_exporter /mongodb_exporter
+
+CMD [ "/mongodb_exporter" ]
